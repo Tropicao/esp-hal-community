@@ -259,7 +259,7 @@ where
 
         // Perform the actual RMT operation.
         let channel = self.channel.take().unwrap();
-        match channel.transmit(self.rmt_buffer)?.wait() {
+        match channel.transmit(self.rmt_buffer).map_err(|(e,_)|e)?.wait() {
             Ok(chan) => {
                 self.channel = Some(chan);
                 Ok(())
